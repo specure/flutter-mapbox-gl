@@ -1155,10 +1155,15 @@ final class MapboxMapController
           if (style == null) {
             result.error("STYLE IS NULL", "The style is null. Has onStyleLoaded() already been invoked?", null);
           }
+          Layer layer = style.getLayer(call.argument("imageLayerId"));
+          if (layer == null) {
+            result.success(null);
+            break;
+          }
           if (call.argument("visibility")) {
-            style.getLayer(call.argument("imageLayerId")).setProperties(visibility(VISIBLE));
+            layer.setProperties(visibility(VISIBLE));
           } else {
-            style.getLayer(call.argument("imageLayerId")).setProperties(visibility(NONE));
+            layer.setProperties(visibility(NONE));
           }
           result.success(null);
           break;
